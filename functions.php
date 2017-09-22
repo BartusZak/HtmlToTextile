@@ -6,10 +6,10 @@ function htmlToTextile($html){
     
     $html = tagToTextile($html);
     $html = listaToTextile($html);
-    $html = preg_replace("/<br.*>/","\n",$html); //zamienia br na \n
+    $html = preg_replace("/<br.*>/"," ",$html); //zamienia br na \n
     //$html = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n",$html); //usuwam puste wiersze
     //$html = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n",$html); //usuwam puste wiersze
-    $html = preg_replace("/<win>/", "\n \n", $html);
+    $html = preg_replace("/#br/", "\n \n", $html);
     
     $textile = $html;
     //return str_replace(array("#\\","/#"),array(">","<"),strip_tags($textile, '<pre>'));
@@ -23,23 +23,23 @@ function tagToTextile($html) {
             if (preg_match('/<p>/',$line)){
                 $line = preg_replace('/<p>/','', $line);
             }elseif (preg_match('/<*.p>/',$line)){
-                $line = "<win>";
+                $line = "#br";
             }elseif (preg_match('/<i>/',$line)){
-               $line = preg_replace('/<i>/','__', $line);
+               $line = preg_replace('/<i>/',' __', $line);
             }elseif (preg_match('/<\/i>/',$line)){
-                $line = preg_replace('/<\/i>/','__', $line);
+                $line = preg_replace('/<\/i>/','__ ', $line);
             }elseif (preg_match('/<em>/',$line)){
-               $line = preg_replace('/<em>/','_', $line);
+               $line = preg_replace('/<em>/',' _', $line);
             }elseif (preg_match('/<\/em>/',$line)){
-                $line = preg_replace('/<\/em>/','_', $line);
+                $line = preg_replace('/<\/em>/','_ ', $line);
             }elseif (preg_match('/<strong>/',$line)){
-               $line = preg_replace('/<strong>/','*', $line);
+               $line = preg_replace('/<strong>/',' *', $line);
             }elseif (preg_match('/<\/strong>/',$line)){
-                $line = preg_replace('/<\/strong>/','*', $line);
+                $line = preg_replace('/<\/strong>/','* ', $line);
             }elseif (preg_match('/<b>/',$line)){
-               $line = preg_replace('/<b>/','**', $line);
+               $line = preg_replace('/<b>/',' **', $line);
             }elseif (preg_match('/<\/b>/',$line)){
-                $line = preg_replace('/<\/b>/','**', $line);
+                $line = preg_replace('/<\/b>/','** ', $line);
             }
             $glyph_out[] = $line;
         }
